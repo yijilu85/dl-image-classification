@@ -3,19 +3,26 @@
     <v-container fluid>
       <v-row density="comfortable">
         <v-col>
-          <img ref="my-image" :src="props.imgSrc" alt="Image to classify" />
+          <img
+            ref="img"
+            :src="props.imgSrc"
+            alt="Image to classify"
+            class="object-cover"
+          />
         </v-col>
         <v-col>
-          <h2>Classification Results</h2>
+          <h2 class="mb-12 flex justify-center">{{ headline }}</h2>
           <!-- {{ results }} -->
           <div v-if="results && results?.length > 0">
             <Bar :data="data" :options="options" />
-            <!-- <ul>
-              <li v-for="result in results">
-                label: {{ result.label }}, <br />
-                confidence: {{ result.confidence.toFixed(4) }}
-              </li>
-            </ul> -->
+          </div>
+          <div class="flex justify-center" v-else>
+            <v-progress-circular
+              :size="200"
+              :width="15"
+              color="rgba(75, 192, 192, 0.5)"
+              indeterminate
+            ></v-progress-circular>
           </div>
         </v-col>
       </v-row>
@@ -25,7 +32,7 @@
 
 <script setup lang="ts">
 import ml5 from "ml5";
-import { onMounted, ref, useTemplateRef } from "vue";
+import { computed, onMounted, ref, useTemplateRef } from "vue";
 import {
   Chart as ChartJS,
   Title,
@@ -63,24 +70,28 @@ const options = {
       position: "top" as const,
     },
     indexAxis: "x",
-
-    // title: {
-    //   display: true,
-    //   text: "Classification Confidence",
-    // },
   },
 };
 const props = defineProps<{
   imgSrc: string;
+  correct: boolean;
 }>();
 let classifier: any;
 
-const img = useTemplateRef("my-image");
+const img = useTemplateRef("img");
 
 const results = ref<Result[]>();
 async function preload() {
   classifier = ml5.imageClassifier("MobileNet");
 }
+
+const headline = computed(() => {
+  let correctWording = props.correct ? "Correct" : "Wrong";
+  let suffix =
+    results.value && results.value.length > 0 ? correctWording : "...";
+
+  return `Classification result: ${suffix}`;
+});
 
 function gotResult(res: Result[]) {
   console.log("Classification results:", res);
@@ -102,6 +113,7 @@ function classify() {
   console.log("Image element:", img.value);
   classifier.classify(img.value, gotResult);
 }
+
 onMounted(async () => {
   await preload();
   classify();
