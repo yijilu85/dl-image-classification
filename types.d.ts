@@ -8,3 +8,11 @@ declare interface FilePreview {
   name: string;
   type: "image";
 }
+
+declare interface ImageGroup {
+  name: "correct" | "incorrect" | "own";
+  label: boolean | undefined;
+  images: string[];
+  order: number;
+  enableUpload: boolean;
+}

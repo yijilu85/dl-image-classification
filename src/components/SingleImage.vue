@@ -1,5 +1,10 @@
 <template>
-  <v-card class="mx-auto" max-width="1200">
+  <v-card
+    :class="`mx-auto ${bgColor}`"
+    max-width="1000"
+    @mouseover="onHover"
+    @mouseleave="onLeave"
+  >
     <v-container fluid>
       <v-row density="comfortable">
         <v-col>
@@ -11,7 +16,21 @@
           />
         </v-col>
         <v-col>
-          <h2 class="mb-12 flex justify-center">{{ headline }}</h2>
+          <div
+            class="mb-8 grid items-center"
+            style="grid-template-columns: 1fr auto 1fr"
+          >
+            <div></div>
+            <h2 class="m-0 text-center">{{ headline }}</h2>
+            <div class="justify-self-end" :class="{ invisible: !isHovering }">
+              <v-btn
+                density="comfortable"
+                icon="$close"
+                variant="plain"
+                @click="$emit('remove')"
+              ></v-btn>
+            </div>
+          </div>
           <!-- {{ results }} -->
           <div v-if="results && results?.length > 0">
             <Bar :data="data" :options="options" />
@@ -27,12 +46,14 @@
         </v-col>
       </v-row>
     </v-container>
+    <!-- <template v-slot:append> </template> -->
   </v-card>
 </template>
 
 <script setup lang="ts">
 import ml5 from "ml5";
 import { computed, onMounted, ref, useTemplateRef } from "vue";
+
 import {
   Chart as ChartJS,
   Title,
@@ -63,6 +84,10 @@ const data = {
     },
   ],
 };
+
+const emit = defineEmits<{
+  (e: "remove"): void;
+}>();
 const options = {
   responsive: true,
   plugins: {
@@ -74,7 +99,7 @@ const options = {
 };
 const props = defineProps<{
   imgSrc: string;
-  correct: boolean;
+  correct: boolean | undefined;
 }>();
 let classifier: any;
 
@@ -85,12 +110,41 @@ async function preload() {
   classifier = ml5.imageClassifier("MobileNet");
 }
 
+const isHovering = ref(false);
+
+const onHover = () => {
+  isHovering.value = true;
+};
+
+const onLeave = () => {
+  isHovering.value = false;
+};
+
 const headline = computed(() => {
-  let correctWording = props.correct ? "Correct" : "Wrong";
+  let correctWording = "undecided";
+  console.log("Computing headline with props:", props);
+  if (props.correct !== undefined) {
+    correctWording = props.correct ? "Correct" : "Wrong";
+  }
   let suffix =
     results.value && results.value.length > 0 ? correctWording : "...";
 
   return `Classification result: ${suffix}`;
+});
+
+const computationCorrect = computed(() => {
+  if (props.correct !== undefined) {
+    return props.correct;
+  }
+
+  return props.correct;
+});
+
+const bgColor = computed(() => {
+  if (results.value && results.value.length > 0) {
+    return props.correct ? "bg-green-100" : "bg-red-100";
+  }
+  return "bg-gray-100";
 });
 
 function gotResult(res: Result[]) {
