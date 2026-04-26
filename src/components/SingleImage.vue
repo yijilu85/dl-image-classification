@@ -1,5 +1,6 @@
 <template>
   <v-card
+    ref="card"
     :class="`mx-auto ${bgColor}`"
     max-width="1000"
     @mouseover="onHover"
@@ -54,11 +55,8 @@
 </template>
 
 <script setup lang="ts">
-// import ml5 from "ml5";
 import { classifier } from "../../src/imageClassifier";
-
 import { computed, onMounted, ref, useTemplateRef } from "vue";
-
 import {
   Chart as ChartJS,
   Title,
@@ -69,6 +67,9 @@ import {
   LinearScale,
 } from "chart.js";
 import { Bar } from "vue-chartjs";
+
+const hasClassified = ref(false);
+const cardRef = useTemplateRef("card");
 
 ChartJS.register(
   CategoryScale,
@@ -161,7 +162,20 @@ function classify() {
 }
 
 onMounted(async () => {
-  classify();
+  const observer = new IntersectionObserver(
+    (entries) => {
+      if (entries[0].isIntersecting && !hasClassified.value) {
+        hasClassified.value = true;
+        classify();
+        observer.disconnect();
+      }
+    },
+    { threshold: 0.1 },
+  );
+
+  if (cardRef.value?.$el) {
+    observer.observe(cardRef.value.$el);
+  }
 });
 </script>
 
