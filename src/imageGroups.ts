@@ -1,7 +1,5 @@
-const imgFolderPath = "/src/assets/images/";
-
 const imgPath = (fileName: string): string => {
-  return imgFolderPath + fileName;
+  return new URL(`./assets/images/${fileName}`, import.meta.url).href;
 };
 
 export const setupImageGroups = [
