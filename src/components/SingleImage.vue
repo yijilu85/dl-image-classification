@@ -54,7 +54,9 @@
 </template>
 
 <script setup lang="ts">
-import ml5 from "ml5";
+// import ml5 from "ml5";
+import { classifier } from "../../src/imageClassifier";
+
 import { computed, onMounted, ref, useTemplateRef } from "vue";
 
 import {
@@ -111,13 +113,10 @@ const props = defineProps<{
   imgSrc: string;
   correct: boolean | undefined;
 }>();
-let classifier: any;
 
 const img = useTemplateRef("img");
 const results = ref<Result[]>();
-async function preload() {
-  classifier = ml5.imageClassifier("MobileNet");
-}
+
 const isHovering = ref(false);
 
 const onHover = () => {
@@ -162,7 +161,6 @@ function classify() {
 }
 
 onMounted(async () => {
-  await preload();
   classify();
 });
 </script>

@@ -14,7 +14,14 @@
   </v-app>
 </template>
 
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import { preload } from "../src/imageClassifier";
+import { onMounted } from "vue";
+
+onMounted(async () => {
+  await preload();
+});
+</script>
 
 <style lang="scss">
 .active {
