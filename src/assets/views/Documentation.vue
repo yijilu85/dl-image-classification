@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="documentation-view">
     <article class="mb-8">
       <h2 class="text-2xl font-bold mb-4">
         Deep Learning EA 1: Bilderkennung mit ml5
@@ -84,7 +84,7 @@
         preloaded. In einer zentralen Datei werden Bildgruppen mit ihren
         Attributen definiert.
       </p>
-      <pre><strong>Bildgruppen-Definition</strong>
+      <pre class="doc-code-block"><strong>Bildgruppen-Definition</strong>
         {{ rawDefinition }}
       </pre>
       <p>
@@ -95,7 +95,7 @@
         Zusätzlich können eigene Bilder per Drag-and-drop hochgeladen und im
         gleichen Ablauf klassifiziert werden.
       </p>
-      <pre> <strong
+      <pre class="doc-code-block"> <strong
           >Dynamisches Rendering der Bildgruppen und ihrer Bildelemente</strong
         >
        {{ rawTemplate }}
@@ -171,3 +171,34 @@ const rawTemplate = `
   >
   </FileUpload>`;
 </script>
+
+<style scoped>
+.documentation-view {
+  width: 100%;
+  min-width: 0;
+}
+
+.doc-code-block {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  background: #f1f6ff;
+  color: inherit;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 10px;
+  padding: 0.9rem;
+  margin: 1rem 0;
+}
+
+@media (max-width: 640px) {
+  .doc-code-block {
+    padding: 0.7rem;
+    font-size: 0.75rem;
+  }
+}
+</style>
