@@ -1,7 +1,7 @@
 <template>
   <div class="mb-8">
-    <div class="flex items-center justify-between pb-4 gap-4">
-      <h2 class="text-2xl font-bold">{{ groupData.name }}</h2>
+    <div class="group-header pb-4">
+      <h2 class="group-title text-2xl font-bold">{{ groupData.name }}</h2>
       <v-tooltip text="Reset group to original images">
         <template v-slot:activator="{ props }">
           <v-btn
@@ -94,6 +94,19 @@ onMounted(async () => {});
 
 <style scoped>
 @reference "../styles/tailwind.css";
+
+.group-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.group-title {
+  line-height: 1.2;
+}
+
 .fade-item {
   transition:
     opacity 0.3s ease,
@@ -103,5 +116,11 @@ onMounted(async () => {});
 .fade-item.removing {
   opacity: 0;
   transform: translateY(-10px);
+}
+
+@media (max-width: 640px) {
+  .group-title {
+    font-size: 1.25rem;
+  }
 }
 </style>

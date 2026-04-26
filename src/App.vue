@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-main>
-      <nav class="mt-8 mb-8 flex gap-8 justify-end">
+      <nav class="main-nav mt-4 mb-6 sm:mt-8 sm:mb-8">
         <RouterLink activeClass="active" to="/">Bild-Klassifikation</RouterLink>
         <RouterLink activeClass="active" to="/documentation"
           >Dokumentation</RouterLink
@@ -31,7 +31,25 @@ onMounted(async () => {
   text-decoration-color: var(--color-primary);
 }
 .main {
-  width: 1000px;
+  width: min(100%, 1000px);
   margin: 0 auto;
+  padding: 0 1rem 1.5rem;
+}
+
+.main-nav {
+  width: min(100%, 1000px);
+  margin-inline: auto;
+  padding: 0 1rem;
+  display: flex;
+  justify-content: flex-end;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 640px) {
+  .main-nav {
+    justify-content: center;
+    gap: 1rem;
+  }
 }
 </style>

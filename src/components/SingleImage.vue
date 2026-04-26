@@ -2,21 +2,22 @@
   <v-card
     ref="card"
     :class="`mx-auto ${bgColor}`"
+    width="100%"
     max-width="1000"
     @mouseover="onHover"
     @mouseleave="onLeave"
   >
-    <v-container fluid>
+    <v-container fluid class="pa-3 sm:pa-4">
       <v-row density="comfortable">
-        <v-col>
+        <v-col cols="12" md="6">
           <img
             ref="img"
             :src="props.imgSrc"
             alt="Image to classify"
-            class="object-cover"
+            class="image-preview"
           />
         </v-col>
-        <v-col>
+        <v-col cols="12" md="6">
           <div
             class="mb-8 grid items-center"
             style="grid-template-columns: 1fr auto 1fr"
@@ -28,7 +29,10 @@
               </h3>
             </div>
 
-            <div class="justify-self-end" :class="{ invisible: !isHovering }">
+            <div
+              class="justify-self-end"
+              :class="{ invisible: !isHovering && !smAndDown }"
+            >
               <v-btn
                 density="comfortable"
                 icon="$close"
@@ -57,6 +61,7 @@
 <script setup lang="ts">
 import { classifier } from "../../src/imageClassifier";
 import { computed, onMounted, ref, useTemplateRef } from "vue";
+import { useDisplay } from "vuetify";
 import {
   Chart as ChartJS,
   Title,
@@ -70,6 +75,7 @@ import { Bar } from "vue-chartjs";
 
 const hasClassified = ref(false);
 const cardRef = useTemplateRef("card");
+const { smAndDown } = useDisplay();
 
 ChartJS.register(
   CategoryScale,
@@ -181,4 +187,18 @@ onMounted(async () => {
 
 <style scoped>
 @reference "../styles/tailwind.css";
+
+.image-preview {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 0.5rem;
+  object-fit: cover;
+}
+
+@media (max-width: 640px) {
+  .v-container {
+    padding: 0.75rem;
+  }
+}
 </style>
