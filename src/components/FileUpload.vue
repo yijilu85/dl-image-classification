@@ -7,7 +7,7 @@
     @dragleave="isDragging = false"
     @drop.prevent="onDrop"
   >
-    <div>
+    <div class="flex flex-col justify-center items-center">
       <v-icon size="44" class="mb-3">mdi-cloud-upload</v-icon>
       <p class="dropzone-label">Drag and drop images</p>
     </div>
@@ -36,7 +36,6 @@ function onDrop(e: DragEvent) {
   isDragging.value = false;
   const dropped = e.dataTransfer?.files;
   if (dropped?.length) {
-    // Revoke old URLs before replacing
     previews.value.forEach((p) => URL.revokeObjectURL(p.url));
     files.value = Array.from(dropped);
     emit("file-selected", previews.value);

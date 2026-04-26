@@ -21,11 +21,14 @@
     <SingleImage
       v-for="(item, index) in visibleImages"
       :imgSrc="item"
-      :correct="groupData.label"
+      :correct="groupData.labelCorrect"
       class="mt-4 mb-4 fade-item"
       @remove="handleRemoveImage(index, visibleImages)"
       :class="{ removing: removingIndex === index }"
     />
+    <article v-if="groupData.discussion" class="mt-4 mb-4">
+      <p><strong>Diskussion:</strong> {{ groupData.discussion }}</p>
+    </article>
     <SingleImage
       v-for="(item, uploadedIndex) in uploadedFilePreviews"
       :key="item.url"

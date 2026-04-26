@@ -11,8 +11,9 @@ declare interface FilePreview {
 
 declare interface ImageGroup {
   name: "correct" | "incorrect" | "own";
-  label: boolean | undefined;
+  labelCorrect: boolean | undefined;
   images: string[];
   order: number;
   enableUpload: boolean;
+  discussion?: string;
 }
