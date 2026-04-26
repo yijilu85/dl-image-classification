@@ -46,7 +46,7 @@
           >
         </li>
         <li>
-          Hosting und Deployment:
+          Hosting, Deployment und CI/CD:
           <a
             href="https://github.com/"
             target="_blank"
@@ -70,6 +70,10 @@
           class="text-primary underline"
           >unsplash</a
         >.
+      </p>
+      <p>
+        Das Hosting und Deployment erfolgt über Github Pages, die CI/CD-Pipeline
+        wird mit Github Actions umgesetzt.
       </p>
     </article>
     <article>
