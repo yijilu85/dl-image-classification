@@ -6,21 +6,25 @@ const imgPath = (fileName: string): string => {
 
 export const setupImageGroups = [
   {
-    name: "correct",
+    name: "Vorauswahl korrekter Klassifikationen",
     label: true,
-    images: [imgPath("cat.jpg"), imgPath("cat.jpg"), imgPath("cat.jpg")],
+    images: [
+      imgPath("daisy.jpg"),
+      imgPath("tiger-cat.jpg"),
+      imgPath("ant.jpg"),
+    ],
     order: 1,
     enableUpload: false,
   },
   {
-    name: "incorrect",
+    name: "Vorauswahl falscher Klassifikationen",
     label: false,
-    images: [imgPath("bird.jpg"), imgPath("bird.jpg"), imgPath("bird.jpg")],
+    images: [imgPath("book.jpg"), imgPath("cactus.jpg"), imgPath("baby.jpg")],
     order: 2,
     enableUpload: false,
   },
   {
-    name: "own",
+    name: "Klassifikationen von Uploads",
     label: undefined,
     images: [],
     order: 3,

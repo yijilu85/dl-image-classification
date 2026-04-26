@@ -2,7 +2,6 @@
   <v-sheet
     class="dropzone pa-8 text-center w-100 h-50 flex align-center justify-center mx-auto py-12"
     :class="{ dragging: isDragging }"
-    border
     rounded
     @dragover.prevent="isDragging = true"
     @dragleave="isDragging = false"
@@ -10,7 +9,7 @@
   >
     <div>
       <v-icon size="48" class="mb-4">mdi-cloud-upload</v-icon>
-      <p>Drag & drop an image here, or</p>
+      <p>Drag and drop images</p>
     </div>
   </v-sheet>
 </template>
@@ -22,7 +21,7 @@ const isDragging = ref(false);
 const files = ref<File[]>([]);
 
 const emit = defineEmits<{
-  (e: "file-selected", file: FilePreview): void;
+  (e: "file-selected", file: FilePreview[]): void;
 }>();
 
 const previews = computed<FilePreview[]>(() =>
@@ -40,7 +39,7 @@ function onDrop(e: DragEvent) {
     // Revoke old URLs before replacing
     previews.value.forEach((p) => URL.revokeObjectURL(p.url));
     files.value = Array.from(dropped);
-    emit("file-selected", previews.value[0]);
+    emit("file-selected", previews.value);
   }
 }
 </script>

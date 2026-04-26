@@ -5,21 +5,22 @@
  */
 
 // Composables
-import { createApp } from 'vue'
+import { createApp } from "vue";
 
 // Plugins
-import { registerPlugins } from '@/plugins'
+import { registerPlugins } from "@/plugins";
+import { router } from "@/router";
 
 // Components
-import App from './App.vue'
+import App from "./App.vue";
 
 // Styles
-import 'unfonts.css'
-import './styles/tailwind.css'
-import './styles/main.scss'
+import "unfonts.css";
+import "./styles/tailwind.css";
+import "./styles/main.scss";
 
-const app = createApp(App)
+const app = createApp(App);
 
-registerPlugins(app)
+registerPlugins(app);
 
-app.mount('#app')
+app.use(router).mount("#app");

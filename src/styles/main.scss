@@ -5,3 +5,19 @@
     font-family: var(--font-mono);
   }
 }
+
+html,
+body,
+#app,
+.v-application,
+.v-application__wrap {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  color: var(--color-on-surface);
+  display: flex;
+  justify-content: center;
+}

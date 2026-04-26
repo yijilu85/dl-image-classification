@@ -1,6 +1,23 @@
 <template>
-  elements: {{ visibleImages }} uplöoaded: {{ uploadedFilePreviews }}
-  <div class="mt-2">
+  <div class="mb-8">
+    <div class="flex items-center justify-between pb-4 gap-4">
+      <h2 class="text-2xl font-bold">{{ groupData.name }}</h2>
+      <v-tooltip text="Reset group to original images">
+        <template v-slot:activator="{ props }">
+          <v-btn
+            v-bind="props"
+            prepend-icon="mdi-refresh"
+            variant="plain"
+            @click="resetGroup"
+          >
+            <template v-slot:prepend>
+              <v-icon color="success"></v-icon>
+            </template>
+            Reset
+          </v-btn>
+        </template>
+      </v-tooltip>
+    </div>
     <SingleImage
       v-for="(item, index) in visibleImages"
       :imgSrc="item"
@@ -16,9 +33,10 @@
       @remove="handleRemoveUploadedImage(uploadedIndex, uploadedFilePreviews)"
       :class="{ removing: removingUploadedIndex === uploadedIndex }"
       :imgSrc="item.url"
-      :correct="true"
+      :correct="undefined"
     />
     <FileUpload
+      class="mt-4 mb-8"
       v-if="groupData.enableUpload"
       @file-selected="handleFilesSelected($event)"
     >
@@ -35,19 +53,21 @@ const props = defineProps<{
   groupData: ImageGroup;
 }>();
 
-const visibleImages = ref<string[]>(props.groupData.images);
+const visibleImages = ref<string[]>([...props.groupData.images]);
 const removingIndex = ref<number | null>(null);
 const removingUploadedIndex = ref<number | null>(null);
 
 const uploadedFilePreviews = ref<FilePreview[]>([]);
-const handleFilesSelected = (filePreview: FilePreview) => {
-  console.log("File selected:", filePreview);
-  uploadedFilePreviews.value.push(filePreview);
+const handleFilesSelected = (filePreview: FilePreview[]) => {
+  filePreview.forEach((preview) => {
+    if (!uploadedFilePreviews.value.some((p) => p.url === preview.url)) {
+      uploadedFilePreviews.value.push(preview);
+    }
+  });
 };
 
 const handleRemoveImage = (index: number, list: string[] | FilePreview[]) => {
   removingIndex.value = index;
-  console.log("Removing image at index:", index, list);
   setTimeout(() => {
     list.splice(index, 1);
     removingIndex.value = null;
@@ -57,16 +77,19 @@ const handleRemoveUploadedImage = (
   index: number,
   list: string[] | FilePreview[],
 ) => {
-  console.log("Removing image at index:", index, list);
   removingUploadedIndex.value = index;
   setTimeout(() => {
     list.splice(index, 1);
     removingUploadedIndex.value = null;
   }, 300);
 };
-onMounted(async () => {
-  console.log("Mounted ImageGroup with data:", props.groupData);
-});
+
+const resetGroup = () => {
+  visibleImages.value = [...props.groupData.images];
+  uploadedFilePreviews.value = [];
+};
+
+onMounted(async () => {});
 </script>
 
 <style scoped>
