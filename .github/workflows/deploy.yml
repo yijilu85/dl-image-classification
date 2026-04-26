@@ -13,6 +13,7 @@ jobs:
         with:
           node-version: 20
 
+      - run: npm install -g patch-package
       - run: npm install --legacy-peer-deps
       - run: npm run build
 
