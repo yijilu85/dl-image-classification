@@ -21,6 +21,7 @@
     <SingleImage
       v-for="(item, index) in visibleImages"
       :imgSrc="item"
+      :key="item"
       :correct="groupData.labelCorrect"
       class="mt-4 mb-4 fade-item"
       @remove="handleRemoveImage(index, visibleImages)"
