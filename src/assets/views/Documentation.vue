@@ -45,6 +45,15 @@
             >chart.js</a
           >
         </li>
+        <li>
+          Hosting und Deployment:
+          <a
+            href="https://github.com/"
+            target="_blank"
+            class="text-primary underline"
+            >Github Pages/Github Actions</a
+          >
+        </li>
       </ul>
       <p>
         Die Webanwendung wurde mit Vue 3 und TypeScript umgesetzt und mit Vite
