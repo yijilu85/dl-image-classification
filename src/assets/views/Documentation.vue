@@ -10,16 +10,25 @@
       <h2 class="text-2xl font-bold mb-4">Tech Stack</h2>
       <ul>
         <li>
-          Frontend framework:
+          Frontend Framework:
           <a
-            href="https://vuejs.org/"
-            target="_blank"
-            class="text-primary underline"
-            >Vue.js</a
+          href="https://vuejs.org/"
+          target="_blank"
+          class="text-primary underline"
+          >Vue.js</a
           >
         </li>
         <li>
-          UI Frontend library:
+          Build Tool
+          <a
+            href="https://vite.dev/"
+            target="_blank"
+            class="text-primary underline"
+            >Vite</a
+          >
+        </li>
+        <li>
+          Frontend UI Library:
           <a
             href="https://vuetifyjs.com/en/introduction/why-vuetify/"
             target="_blank"
@@ -28,7 +37,7 @@
           >
         </li>
         <li>
-          Image classification framework:
+          Image Classification Framework:
           <a
             href="https://ml5js.org/"
             target="_blank"
@@ -37,7 +46,7 @@
           >
         </li>
         <li>
-          Data visualization:
+          Data Visualization:
           <a
             href="https://www.chartjs.org/"
             target="_blank"
@@ -56,13 +65,16 @@
         </li>
       </ul>
       <p>
-        Die Webanwendung wurde mit Vue 3 und TypeScript umgesetzt und mit Vite
-        als Build- und Development-Tool erstellt. Für die Oberfläche kommen
+        Die Webanwendung wurde mit Vue 3, TypeScript und mit Vite
+        als Build-Tool umgesetut. Für die Oberfläche kommen
         Vuetify-Komponenten sowie Tailwind-CSS-Klassen für Layout und Styling.
         Die Bildklassifikation basiert auf ml5.js und dem vortrainierten
-        MobileNet-Modell im Browser. Die Visulaisierung der Daten erfolgt mit
-        chart.js.
-        <br /><br />
+        MobileNet-Modell. Die Visulasierung der Daten erfolgt mit
+        chart.js.  
+      <p>
+        Das Hosting und Deployment erfolgt über Github Pages, die CI/CD-Pipeline
+        wird mit Github Actions umgesetzt.
+      </p>
         Alle verwendeten Bilder stammen von
         <a
           href="https://unsplash.com/"
@@ -71,10 +83,7 @@
           >unsplash</a
         >.
       </p>
-      <p>
-        Das Hosting und Deployment erfolgt über Github Pages, die CI/CD-Pipeline
-        wird mit Github Actions umgesetzt.
-      </p>
+
     </article>
     <article>
       <h2 class="text-2xl font-bold mb-4">Implementation</h2>
@@ -89,9 +98,9 @@
       </pre>
       <p>
         Die Anwendung erstellt dynamisch für die definierten Bildgruppen
-        einzelne Einzelbild-Container, die einen
-        <code>Classify-Request</code> an ml5 sendet, die Antwort mit dem
-        Klassifikationsresultat empfängt und als Balkendiagramme anzeigt.
+        einzelne Einzelbild-Container, die jeweils einen
+        <code>Classify-Request</code> an ml5 senden. Die Antworten mit dem
+        Klassifikationsresultat werden für jedes Bild als Balkendiagramme anzeigt.
         Zusätzlich können eigene Bilder per Drag-and-drop hochgeladen und im
         gleichen Ablauf klassifiziert werden.
       </p>
@@ -107,7 +116,7 @@
       </p>
       <p>
         Für ein angenehmes Handling im Interface wurde eine Funktionalität
-        eingebaut, um Bild-Elemente aus einer Gruppe zu entfernen und die Gruppe
+        eingebaut, um Bild-Elemente aus ihrer Gruppe zu entfernen und die Gruppe
         auf den Originalzustand wieder zu resetten.
       </p>
     </article>
